@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div style="border: 3px solid black; background: #fff870; width: 330px; height: 190px;padding: 15px 0 0 10px">
+    <b>Chiều dài hình chữ nhật:</b> <input type="number" id="width" min="0">
+    <button onclick="drawRectangle()"
+            style="position: absolute; top:65px; left: 230px; padding: 10px 20px; border: 1px solid black; border-radius: 7px">
+        Hiển thị
+    </button>
+    <br><br>
+    <b>Chiều rộng hình chữ nhật:</b> <input type="number" id="height">
+    <br><br>
+    <b id="area">Diện tích hình chữ nhật là:</b>
+    <br><br>
+    <b id="perimeter">Chu vi hình chữ nhật là:</b>
+</div>
+<br>
+<canvas id="myCanvas" width="1000" height="1000"></canvas>
+
+<script>
+
+    class Rectangle {
+        width;
+        height;
+
+        constructor(width, height) {
+            this.width = width;
+            this.height = height;
+        }
+
+        getWidth() {
+            return this.width;
+        }
+
+        setWidth(value) {
+            this.width = value;
+        }
+
+        getHeight() {
+            return this.height;
+        }
+
+        setHeight(value) {
+            this.height = value;
+        }
+
+        getArea() {
+            return this.width * this.height;
+        }
+
+        getPerimeter() {
+            return (this.width + this.height) * 2;
+        }
+
+        displayRectangle() {
+
+            let canvas = document.getElementById('myCanvas')
+            canvas.width = this.width;
+            canvas.height = this.height;
+
+            let ctx = document.getElementById('myCanvas').getContext('2d');
+
+            if(this.width <= 0 || this.height <= 0) {
+                alert('Lỗi');
+            } else {
+                ctx.fillStyle = randomColor();
+                ctx.fillRect(0, 0, this.width, this.height);
+                ctx.strokeStyle = 'black';
+                ctx.lineWidth = 5;
+                ctx.strokeRect(0, 0, this.width, this.height);
+
+                document.getElementById('area').innerText = 'Diện tích hình chữ nhật là: ' + this.getArea();
+
+                document.getElementById('perimeter').innerText = 'Chu vi hình chữ nhật là: ' + this.getPerimeter();
+            }
+        }
+    }
+
+    function drawRectangle() {
+        let rectangle = new Rectangle(+document.getElementById('width').value, +document.getElementById('height').value);
+        rectangle.displayRectangle()
+    }
+
+    function randomHex() {
+        return Math.floor(Math.random() * 256);
+    }
+
+    function randomColor() {
+        let red = randomHex();
+        let green = randomHex();
+        let blue = randomHex();
+
+        return 'rgb(' + red + ',' + green + ',' + blue + ')';
+    }
+
+
+</script>
+
+</body>
+</html>
